@@ -11,11 +11,17 @@ import time
 import win32api, win32con
 
 x_pad = 0
-y_pad = 90
+y_pad = 0
 
-prod_house_pos = ((600, 435), (695, 440), (650, 460), (650, 415), (700, 390), (750, 415), (815, 280))
-min5_pos = (515, 270)
-exit_pos = (10, 55)
+prod_house_pos = ((410, 495), (535, 560), (585, 535), (640, 510), (585, 585), (635, 560), (685, 535))
+house_pos = ((560, 345), (525, 360), (500, 375), (470, 390), (440, 405), (405, 420), (375, 435), (345, 450), (310, 465),
+             (605, 360), (575, 375), (545, 390), (510, 405), (480, 420), (450, 440), (420, 455), (390, 470),
+             (640, 380), (605, 390), (575, 410), (545, 425), (510, 440), (480, 455), (450, 470),
+             (680, 400), (650, 415), (620, 430), (590, 450), (560, 460), (530, 480), (500, 490), (470, 510), (440, 525),
+             (720, 415), (685, 430), (650, 445), (620, 460), (590, 480), (560, 490), (510, 515), (470, 540))
+min5_pos = (515, 360)
+exit_pos = (18, 150)
+tab_pos = (30, 15)
 
 def screenGrab():
     box = (x_pad, y_pad, x_pad+828, y_pad+634)
@@ -78,10 +84,25 @@ def gather_product():
         leftClick()
     
 def main():
+    turn = 0
     while(1):
+        mousePos(tab_pos)
+        leftClick()
+        if turn % 12 == 0:
+            for i in range(len(house_pos)):
+                mousePos(exit_pos)
+                leftClick()
+                mousePos(house_pos[i])
+                leftClick()
         start_product()
-        time.sleep(300)
+        mousePos(exit_pos)
+        time.sleep(270)
+        mousePos(tab_pos)
+        leftClick()
+        time.sleep(25)
+        mousePos(tab_pos)
+        leftClick()
         gather_product()
-        time.sleep(1)
+        turn = turn + 1
 if __name__ == '__main__':
     main()
